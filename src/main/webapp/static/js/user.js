@@ -1,3 +1,17 @@
+//js获取项目根路径，如： http://localhost:8083/uimcardprj
+function getRootPath(){
+    //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+    var curWwwPath=window.document.location.href;
+    //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+    var pathName=window.document.location.pathname;
+    var pos=curWwwPath.indexOf(pathName);
+    //获取主机地址，如： http://localhost:8083
+    var localhostPaht=curWwwPath.substring(0,pos);
+    //获取带"/"的项目名，如：/uimcardprj
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+    return(localhostPaht+projectName);
+}
+
 /**
  * 抽离-- 根据username查询用户信息的方法
  * @param username
@@ -5,7 +19,7 @@
 function findByUsername(username) {
     var obj = {};
     $.ajax({
-        url: '../../user/findByUsername.do?username=' + username,
+        url: getRootPath()+'/user/findByUsername.do?username=' + username,
         type: 'get',
         async: false,
         success: (result) => {
@@ -26,7 +40,7 @@ function findByUsername(username) {
 function findRoles(username) {
     var obj = [];
     $.ajax({
-        url: '../../user/findRoles.do?username=' + username,
+        url: getRootPath()+'/user/findRoles.do?username=' + username,
         type: 'get',
         async: false,
         success: (result) => {
@@ -89,7 +103,7 @@ function RolesBtn(id, username) {
     $(function () {
         //加载后端构建的ZTree树（节点的数据格式已在后端格式化好了）
         $.ajax({
-            url: '../../user/getZTreeForUserRoles.do',
+            url: getRootPath()+'/user/getZTreeForUserRoles.do',
             type: 'get',
             dataType: "json",
             success: (data) => {
@@ -153,7 +167,7 @@ function surePermission() {
 
     //提交
     $.ajax({
-        url: '../../user/updateUserRoles.do',
+        url: getRootPath()+'/user/updateUserRoles.do',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
@@ -199,7 +213,7 @@ $(".status-sure").click(function () {
     }
     // console.log('id:' + $("#status-modal .id").text() + ',username:' + $("#status-modal .username") + ',password:' + $("#status-modal .password") + ',locked:');
     $.ajax({
-        url: '../../user/update.do',
+        url: getRootPath()+'/user/update.do',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
@@ -248,7 +262,7 @@ $(".create-sure").click(function () {
     if (id != null && id != "") {
         //更新用户信息
         $.ajax({
-            url: '../../user/update.do',
+            url: getRootPath()+'/user/update.do',
             type: 'post',
             dataType: 'json',
             contentType: 'application/json;charset=UTF-8',
@@ -269,7 +283,7 @@ $(".create-sure").click(function () {
     } else {
         //创建用户
         $.ajax({
-            url: '../../user/create.do',
+            url: getRootPath()+'/user/create.do',
             type: 'post',
             dataType: 'json',
             contentType: 'application/json;charset=UTF-8',
@@ -293,7 +307,7 @@ $(".create-sure").click(function () {
 function deleteUser(id){
     if (id != null && id != ""){
         $.ajax({
-            url: '../../user/delete.do?id='+id,
+            url: getRootPath()+'/user/delete.do?id='+id,
             type: 'get',
             success: (data) => {
                 if (data.success){

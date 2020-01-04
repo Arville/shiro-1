@@ -1,10 +1,24 @@
+//js获取项目根路径，如： http://localhost:8083/uimcardprj
+function getRootPath(){
+    //获取当前网址，如： http://localhost:8083/uimcardprj/share/meun.jsp
+    var curWwwPath=window.document.location.href;
+    //获取主机地址之后的目录，如： uimcardprj/share/meun.jsp
+    var pathName=window.document.location.pathname;
+    var pos=curWwwPath.indexOf(pathName);
+    //获取主机地址，如： http://localhost:8083
+    var localhostPaht=curWwwPath.substring(0,pos);
+    //获取带"/"的项目名，如：/uimcardprj
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+    return(localhostPaht+projectName);
+}
+
 /**
  * 抽离--根据当前角色id查询其数据
  */
 function findById(id) {
     var obj = {};
     $.ajax({
-        url: '../../permissions/findById.do?id=' + id,
+        url: getRootPath()+'/permissions/findById.do?id=' + id,
         type: 'get',
         async: false,
         success: (data) => {
@@ -24,7 +38,7 @@ function findById(id) {
 function findPermissionByRoleId(id) {
     var obj = {};
     $.ajax({
-        url: '../../permissions/findRoleByPermissionId.do?id=' + id,
+        url: getRootPath()+'/permissions/findRoleByPermissionId.do?id=' + id,
         type: 'get',
         async: false,
         success: (data) => {
@@ -87,7 +101,7 @@ function permissionBtn(id) {
     $(function () {
         //加载后端构建的ZTree树（节点的数据格式已在后端格式化好了）
         $.ajax({
-            url: '../../permissions/getRolesZTree.do',
+            url: getRootPath()+'/permissions/getRolesZTree.do',
             type: 'get',
             dataType: "json",
             success: (data) => {
@@ -146,7 +160,7 @@ function surePermission() {
 
     //提交
     $.ajax({
-        url: '../../permissions/updateRolesPermissions.do',
+        url: getRootPath()+'/permissions/updateRolesPermissions.do',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
@@ -187,7 +201,7 @@ $(".status-sure").click(function () {
         available = 1;
     }
     $.ajax({
-        url: '../../permissions/update.do',
+        url: getRootPath()+'/permissions/update.do',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
@@ -211,7 +225,7 @@ $(".status-sure").click(function () {
 function deleteRole(id) {
     if (id != null && id != "") {
         $.ajax({
-            url: '../../permissions/delete.do?id=' + id,
+            url: getRootPath()+'/permissions/delete.do?id=' + id,
             type: 'get',
             success: (data) => {
                 if (data.success) {
@@ -255,7 +269,7 @@ function create(id) {
     $(function () {
         //加载后端构建的ZTree树（节点的数据格式已在后端格式化好了）
         $.ajax({
-            url: '../../permissions/getRolesZTree.do',
+            url: getRootPath()+'/permissions/getRolesZTree.do',
             type: 'get',
             dataType: "json",
             success: (data) => {
@@ -286,7 +300,7 @@ $(".create-sure").click(function () {
     console.log(rid);
     //创建用户
     $.ajax({
-        url: '../../permissions/create.do',
+        url: getRootPath()+'/permissions/create.do',
         type: 'post',
         dataType: 'json',
         contentType: 'application/json;charset=UTF-8',
@@ -328,7 +342,7 @@ $(".edit-sure").click(() => {
     if (id != null && id != "") {
         //更新用户信息
         $.ajax({
-            url: '../../permissions/update.do',
+            url: getRootPath()+'/permissions/update.do',
             type: 'post',
             dataType: 'json',
             contentType: 'application/json;charset=UTF-8',
