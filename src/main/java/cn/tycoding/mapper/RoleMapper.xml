@@ -61,14 +61,14 @@
              sys_roles_permissions rp
         WHERE r.id = #{id}
         AND rp.role_id = r.id
-        AND rp.permission_id = p.id;
+        AND rp.permission_id = p.id
     </select>
 
     <!-- 根据角色id查询permission表中属于此角色节点的子节点权限 -->
     <select id="findPermissionByRoleId" parameterType="Long" resultType="cn.tycoding.entity.Permission">
         SELECT id, description, rid
         FROM sys_permissions
-        WHERE rid = #{id};
+        WHERE rid = #{id}
     </select>
 
     <!-- 更新当前角色数据 -->
@@ -101,7 +101,7 @@
         UPDATE sys_users u, sys_users_roles ur
         SET u.role_id = #{description}
         WHERE ur.role_id = #{id}
-          AND u.id = ur.user_id;
+          AND u.id = ur.user_id
     </update>
 
 </mapper>
